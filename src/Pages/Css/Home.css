@@ -1,0 +1,51 @@
+.home-page {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-image: url("https://i.pinimg.com/1200x/00/8c/81/008c81275f71b794ce9240e10dcc1d0e.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.overlay-light {
+    position: absolute;
+    inset: 0;
+    background: rgba(246, 247, 250, 0.55);
+    z-index: 1;
+}
+
+.home-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 850px;
+    padding: 20px;
+    color: #000;
+
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.home-content.show {
+    opacity: 5;
+    transform: translateY(0);
+}
+
+.home-content h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #000;
+}
+
+.home-content p {
+    font-size: 1.4rem;
+    line-height: 1.7;
+    color: #000000;
+}

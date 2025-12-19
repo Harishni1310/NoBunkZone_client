@@ -1,0 +1,74 @@
+.features-container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background-image: url("https://i.pinimg.com/736x/65/eb/d3/65ebd31d4987cd6b47b5657c6fb0f5f7.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  padding: 160px 20px;
+  overflow: hidden;
+}
+
+.features-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(246, 247, 250, 0.55);
+  z-index: 1;
+}
+
+.features-heading {
+  color: #000;
+  font-size: 50px;
+  text-align: center;
+  margin-bottom: 50px;
+  letter-spacing: 1px;
+  font-weight: 800;
+  position: relative;
+  z-index: 2;
+}
+
+.features-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 35px;
+  max-width: 1300px;
+  margin: auto;
+  position: relative;
+  z-index: 2;
+}
+
+.features-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  border-radius: 18px;
+
+  backdrop-filter: blur(10px);
+  color: #000;
+  text-align: center;
+  transition: 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* Hover Effect */
+.features-card:hover {
+  transform: translateY(-10px) scale(1.04);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+/* Title Text */
+.features-card h2 {
+  font-size: 24px;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+/* Description Text */
+.features-card p {
+  font-size: 16px;
+  line-height: 1.5;
+  opacity: 0.9;
+}

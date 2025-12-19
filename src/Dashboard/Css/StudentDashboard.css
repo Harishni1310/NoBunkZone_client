@@ -1,0 +1,181 @@
+
+.student-app{ 
+    display:flex; 
+    height:100vh; 
+    font-family: Inter, Roboto, Arial, sans-serif; 
+}
+
+.student-sidebar{ 
+    width:220px; 
+    background:#4848f8; 
+    color:#fff; 
+    padding:16px; 
+    display:flex; 
+    flex-direction:column; 
+    transition:width .25s; 
+}
+
+.student-sidebar.collapsed{ 
+    width:72px; 
+}
+
+.student-brand{ 
+    display:flex; 
+    align-items:center; 
+    justify-content:space-between; 
+    margin-bottom:12px; 
+}
+
+.student-logo{ 
+    font-weight:700; 
+}
+
+.student-sidebar nav ul{ 
+    list-style:none; 
+    padding:0; 
+    margin:8px 0; 
+}
+
+.student-sidebar nav ul li{ 
+    margin:6px 0; 
+}
+
+.student-sidebar nav ul li a{ 
+    color:#fff; 
+    text-decoration:none; 
+    padding:8px 10px; 
+    display:block; 
+    border-radius:8px; 
+}
+
+.student-sidebar nav ul li a:hover{ 
+    background:#4848f8; 
+}
+
+.student-footer{ 
+    margin-top:auto; 
+    font-size:12px; 
+    opacity:0.9; 
+}
+
+.student-main{ 
+    flex:1; 
+    padding:20px; 
+    background:#f6f8fa; 
+    overflow:auto; 
+}
+.student-panel{ 
+    background:#fff; 
+    padding:18px; 
+    border-radius:12px; 
+    box-shadow:0 6px 20px rgba(0,0,0,0.04); 
+}
+.student-panel{ 
+    background:#fff; 
+    padding:18px; 
+    border-radius:12px; 
+    box-shadow:0 6px 20px rgba(0,0,0,0.04); 
+}
+
+.info-cards{
+    height: 100px;
+    display:flex; 
+    gap:12px; 
+    margin-top:12px; 
+}
+
+.card{ 
+    background:#fafafa; 
+    padding:12px; 
+    border-radius:8px; 
+    flex:1; 
+    box-shadow:0 2px 8px rgba(0,0,0,0.03); 
+}
+
+.card-title{ 
+    font-size:13px; 
+    color:#666; 
+}
+
+.card-value{ 
+    font-size:22px; 
+    font-weight:700; 
+    margin-top:6px; 
+}
+
+.table{ 
+    width:100%; 
+    border-collapse:collapse; 
+    margin-top:10px; 
+}
+
+.table th, .table td{ 
+    padding:10px; 
+    border-bottom:1px solid #eee; 
+}
+
+.form{ 
+    display:flex; 
+    flex-direction:column; 
+    gap:10px; 
+    max-width:640px; 
+}
+.form input, .form textarea{ 
+    padding:8px 10px; 
+    border-radius:8px; 
+    border:1px solid #ddd; 
+}
+.form-actions{ 
+    display:flex; 
+    gap:8px; 
+    margin-top:8px; 
+}
+
+.btn{ 
+    padding:8px 10px; 
+    border-radius:8px; 
+    border:1px solid rgba(0,0,0,0.08); 
+    background:#fff; 
+    cursor:pointer; 
+    margin-left:8px; 
+    text-decoration:none; 
+    display:inline-block; 
+    text-align:center; 
+}
+
+.btn.primary{ 
+    background:#4848f8; 
+    color:#fff; 
+    border-color:transparent; 
+}
+
+.btn.danger{ 
+    background:#fff; 
+    color:#c0392b; 
+    border-color:rgba(192,57,43,0.12); 
+}
+
+.toggle-btn{ 
+    background:transparent; 
+    border:1px solid rgba(255,255,255,0.12); 
+    color:#fff; 
+    padding:6px 8px; 
+    border-radius:8px; 
+    cursor:pointer; 
+}
+
+.profile-card{ 
+    padding:20px; 
+    background:#fbfbfb; 
+    border-radius:12px; 
+    box-shadow:0 4px 15px rgba(0,0,0,0.05); 
+}
+
+.form select{ 
+    padding:8px 10px; 
+    border-radius:8px; 
+    border:1px solid #ddd; 
+}
+
+
+

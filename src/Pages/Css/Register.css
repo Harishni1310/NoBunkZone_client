@@ -1,0 +1,97 @@
+.register-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-image: url("https://i.pinimg.com/1200x/25/f3/79/25f3792bb151520d1ae87926e8e6633a.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.register-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(246, 247, 250, 0.55);
+  z-index: 1;
+}
+
+.register-card {
+  width: 480px;
+  padding: 50px;
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid #ddd;
+
+  z-index: 2;
+  text-align: center;
+  color: #333;
+
+  opacity: 0.95;
+  transform: translateY(10px);
+  transition: all 0.4s ease;
+}
+
+.register-card:hover {
+  transform: translateY(0px) scale(1.03);
+  opacity: 1;
+}
+
+.register-card h1 {
+  margin-bottom: 30px;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.register-form input {
+  padding: 14px 15px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: 1px solid #bbb;
+  color: #333;
+  outline: none;
+
+  transition: 0.3s ease;
+}
+
+.register-form input:focus {
+  border-color: #4c4cff;
+  box-shadow: 0 0 10px rgba(76, 76, 255, 0.4);
+}
+
+.register-btn {
+  padding: 14px;
+  border-radius: 8px;
+  border: none;
+
+  background: #4c4cff;
+  color: white;
+  font-size: 17px;
+  cursor: pointer;
+
+  transition: 0.3s ease;
+}
+
+.register-btn:hover {
+  background: #3737e6;
+  transform: scale(1.05);
+}
+
+.register-switch-text {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.register-switch-text a {
+  color: #4c4cff;
+  font-weight: 600;
+}

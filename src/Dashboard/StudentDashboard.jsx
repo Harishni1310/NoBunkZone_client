@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import './Css/StudentDashboard.css';
-import './Css/StudentAnimations.css';
 import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { studentAPI } from '../services/api.js';
 
@@ -58,9 +57,9 @@ function StudentHeader() {
   });
   
   return (
-    <header className="student-header animate-slide-right" style={{background:'#4848f8', color:'#fff', padding:'15px 20px', display:'flex', justifyContent:'space-between', alignItems:'center'}}>
-      <h1 className="welcome-text" style={{margin:0, fontSize:'24px'}}>Welcome, {currentUser.name}!</h1>
-      <span className="animate-fade-in" style={{animationDelay: '1s'}}>📅 {currentDate}</span>
+    <header style={{background:'#4848f8', color:'#fff', padding:'15px 20px', display:'flex', justifyContent:'space-between', alignItems:'center'}}>
+      <h1 style={{margin:0, fontSize:'24px'}}>Welcome, {currentUser.name}!</h1>
+      <span>📅 {currentDate}</span>
     </header>
   );
 }
@@ -205,28 +204,25 @@ function StudentOverview(){
     <div className="student-panel">
       <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px'}}>
         <h1>👋 Welcome, {currentUser.name}!</h1>
-        <button className="btn primary animate-pulse" onClick={refreshData} disabled={loading}>
-          {loading ? <span className="loading-spinner">🔄</span> : '🔄'} {loading ? 'Loading...' : 'Refresh Data'}
+        <button className="btn primary" onClick={refreshData} disabled={loading}>
+          {loading ? '🔄 Loading...' : '🔄 Refresh Data'}
         </button>
       </div>
       
       <div className="info-cards">
-        <div className="card stagger-item interactive-element">
+        <div className="card">
           <div className="card-title">My Attendance</div>
-          <div className="card-value" style={{color: attendancePercentage >= 75 ? '#28a745' : '#dc3545'}}>{attendancePercentage}%</div>
-          <div className="attendance-progress">
-            <div className="attendance-progress-fill" style={{'--progress-width': `${attendancePercentage}%`, width: `${attendancePercentage}%`}}></div>
-          </div>
+          <div className="card-value">{attendancePercentage}%</div>
         </div>
-        <div className="card stagger-item interactive-element">
+        <div className="card">
           <div className="card-title">Days Present</div>
           <div className="card-value">{presentDays}/{totalDays}</div>
         </div>
-        <div className="card stagger-item interactive-element">
+        <div className="card">
           <div className="card-title">Pending Leaves</div>
-          <div className="card-value" style={{color: pendingLeaves > 0 ? '#ffc107' : '#28a745'}}>{pendingLeaves}</div>
+          <div className="card-value">{pendingLeaves}</div>
         </div>
-        <div className="card stagger-item interactive-element">
+        <div className="card">
           <div className="card-title">Total Applications</div>
           <div className="card-value">{myLeaves.length}</div>
         </div>
@@ -314,12 +310,10 @@ function MyAttendance(){
             </thead>
             <tbody>
               {myRecords.map((record, index) => (
-                <tr key={index} className="stagger-item">
+                <tr key={index}>
                   <td style={{padding: '10px', border: '1px solid #ddd'}}>{record.date}</td>
                   <td style={{padding: '10px', border: '1px solid #ddd', color: record.status === 'present' ? 'green' : 'red'}}>
-                    <span className={record.status === 'present' ? 'animate-bounce' : 'animate-fade-in'}>
-                      {record.status === 'present' ? '✅ Present' : '❌ Absent'}
-                    </span>
+                    {record.status === 'present' ? '✅ Present' : '❌ Absent'}
                   </td>
                 </tr>
               ))}
@@ -432,8 +426,8 @@ function ApplyLeave({setActiveTab}) {
             style={{width: '100%', padding: '8px', marginTop: '5px'}}
           />
         </div>
-        <button type="submit" disabled={loading} className="btn primary animate-glow">
-          {loading ? <><span className="loading-spinner">⏳</span> Submitting...</> : 'Submit Application'}
+        <button type="submit" disabled={loading} className="btn primary">
+          {loading ? 'Submitting...' : 'Submit Application'}
         </button>
       </form>
     </div>
@@ -499,16 +493,14 @@ function LeaveStatus() {
             </thead>
             <tbody>
               {myLeaves.map((leave, index) => (
-                <tr key={index} className="stagger-item">
+                <tr key={index}>
                   <td style={{padding: '10px', border: '1px solid #ddd'}}>{leave.from}</td>
                   <td style={{padding: '10px', border: '1px solid #ddd'}}>{leave.to}</td>
                   <td style={{padding: '10px', border: '1px solid #ddd'}}>{leave.reason}</td>
                   <td style={{padding: '10px', border: '1px solid #ddd', 
                     color: leave.status === 'approved' ? 'green' : leave.status === 'rejected' ? 'red' : 'orange'}}>
-                    <span className={leave.status === 'approved' ? 'animate-bounce' : leave.status === 'rejected' ? 'animate-fade-in' : 'animate-pulse'}>
-                      {leave.status === 'approved' ? '✅ Approved' : 
-                       leave.status === 'rejected' ? '❌ Rejected' : '⏳ Pending'}
-                    </span>
+                    {leave.status === 'approved' ? '✅ Approved' : 
+                     leave.status === 'rejected' ? '❌ Rejected' : '⏳ Pending'}
                   </td>
                 </tr>
               ))}
@@ -603,7 +595,7 @@ function StudentProfile({setActiveTab}) {
       
       <div style={{background: '#fff', padding: '20px', borderRadius: '10px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)'}}>
         <div style={{display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '25px'}}>
-          <div className="profile-avatar animate-float" style={{width: '80px', height: '80px', borderRadius: '50%', background: '#4848f8', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '28px', fontWeight: 'bold'}}>
+          <div style={{width: '80px', height: '80px', borderRadius: '50%', background: '#4848f8', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '28px', fontWeight: 'bold'}}>
             {currentUser.name.charAt(0).toUpperCase()}
           </div>
           <div>
@@ -626,22 +618,19 @@ function StudentProfile({setActiveTab}) {
         
         <h4 style={{color: '#333', marginBottom: '15px'}}>📈 Academic Statistics</h4>
         <div className="info-cards">
-          <div className="card stagger-item interactive-element">
+          <div className="card">
             <div className="card-title">Attendance Rate</div>
             <div className="card-value" style={{color: attendancePercentage >= 75 ? 'green' : 'red'}}>{attendancePercentage}%</div>
-            <div className="attendance-progress">
-              <div className="attendance-progress-fill" style={{'--progress-width': `${attendancePercentage}%`, width: `${attendancePercentage}%`}}></div>
-            </div>
           </div>
-          <div className="card stagger-item interactive-element">
+          <div className="card">
             <div className="card-title">Days Present</div>
             <div className="card-value">{presentDays}</div>
           </div>
-          <div className="card stagger-item interactive-element">
+          <div className="card">
             <div className="card-title">Total Days</div>
             <div className="card-value">{totalDays}</div>
           </div>
-          <div className="card stagger-item interactive-element">
+          <div className="card">
             <div className="card-title">Approved Leaves</div>
             <div className="card-value">{approvedLeaves}</div>
           </div>
@@ -650,9 +639,9 @@ function StudentProfile({setActiveTab}) {
         <div style={{marginTop: '25px', padding: '20px', background: '#f8f9fa', borderRadius: '8px'}}>
           <h4 style={{color: '#333', marginBottom: '15px'}}>📝 Quick Actions</h4>
           <div style={{display: 'flex', gap: '10px', flexWrap: 'wrap'}}>
-            <button className="btn primary stagger-item" onClick={() => setActiveTab('my-attendance')}>📋 View Attendance</button>
-            <button className="btn stagger-item" onClick={() => setActiveTab('apply-leave')}>📝 Apply Leave</button>
-            <button className="btn stagger-item" onClick={() => setActiveTab('leave-status')}>🕰️ Leave Status</button>
+            <button className="btn primary" onClick={() => setActiveTab('my-attendance')}>📋 View Attendance</button>
+            <button className="btn" onClick={() => setActiveTab('apply-leave')}>📝 Apply Leave</button>
+            <button className="btn" onClick={() => setActiveTab('leave-status')}>🕰️ Leave Status</button>
           </div>
         </div>
       </div>

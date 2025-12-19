@@ -10,7 +10,7 @@ const Login = () => {
     e.preventDefault();
     
     try {
-      const response = await fetch('https://nobunkzone-server-1.onrender.com/api/auth/login', {
+      const response = await fetch('https://nobunkzone-server-2.onrender.com/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)

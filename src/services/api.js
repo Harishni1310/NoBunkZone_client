@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://nobunkzone-server-1.onrender.com/api';
+const API_BASE_URL = 'https://nobunkzone-server-3.onrender.com/api';
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('token');

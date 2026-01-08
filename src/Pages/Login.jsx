@@ -10,7 +10,7 @@ const Login = () => {
     e.preventDefault();
     
     try {
-      const response = await fetch('https://nobunkzone-server-5.onrender.com/api/auth/login', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://nobunkzone-server-5.onrender.com'}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -19,9 +19,32 @@ const Login = () => {
       const result = await response.json();
       
       if (response.ok) {
+        // Store auth data
         localStorage.setItem('token', result.token);
         localStorage.setItem('userName', result.name);
         localStorage.setItem('userRole', result.role);
+        localStorage.setItem('userEmail', result.email);
+        
+        // Pre-fetch latest data based on role
+        if (result.role === 'student') {
+          // Fetch latest attendance on login
+          try {
+            const attendanceResponse = await fetch(`${process.env.REACT_APP_API_URL || 'https://nobunkzone-server-5.onrender.com'}/api/student/attendance`, {
+              headers: { 
+                'Authorization': `Bearer ${result.token}`,
+                'Content-Type': 'application/json'
+              }
+            });
+            
+            if (attendanceResponse.ok) {
+              const attendanceData = await attendanceResponse.json();
+              localStorage.setItem('latestAttendance', JSON.stringify(attendanceData));
+              localStorage.setItem('attendanceLastFetch', Date.now().toString());
+            }
+          } catch (attendanceError) {
+            console.log('Could not pre-fetch attendance:', attendanceError);
+          }
+        }
         
         // Role-based redirection
         if (result.role === 'admin') {

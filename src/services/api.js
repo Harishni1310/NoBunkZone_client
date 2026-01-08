@@ -1,4 +1,9 @@
-const API_BASE_URL = 'https://nobunkzone-server-3.onrender.com/api';
+// Environment-based API URL configuration
+const API_BASE_URL = process.env.NODE_ENV === 'production' 
+  ? process.env.REACT_APP_API_URL || 'https://nobunkzone-server-5.onrender.com/api'
+  : 'http://localhost:5000/api';
+
+console.log('API Base URL:', API_BASE_URL); // Debug log
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('token');
@@ -62,17 +67,40 @@ export const studentAPI = {
 
   applyLeave: async (leaveData) => {
     try {
+      console.log('Applying leave with data:', leaveData);
+      console.log('API URL:', `${API_BASE_URL}/student/leave`);
+      
+      const headers = {
+        'Content-Type': 'application/json',
+        ...getAuthHeaders()
+      };
+      
+      console.log('Request headers:', headers);
+      
       const response = await fetch(`${API_BASE_URL}/student/leave`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          ...getAuthHeaders()
-        },
+        headers,
         body: JSON.stringify(leaveData)
       });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      return response.json();
+      
+      console.log('Response status:', response.status);
+      console.log('Response headers:', Object.fromEntries(response.headers.entries()));
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Error response:', errorText);
+        throw new Error(`HTTP ${response.status}: ${errorText}`);
+      }
+      
+      const result = await response.json();
+      console.log('Leave application result:', result);
+      return result;
     } catch (error) {
+      console.error('Apply leave error details:', {
+        message: error.message,
+        stack: error.stack,
+        leaveData
+      });
       throw new Error(`Failed to apply leave: ${error.message}`);
     }
   },

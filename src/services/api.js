@@ -1,9 +1,10 @@
 // Environment-based API URL configuration
 const API_BASE_URL = process.env.NODE_ENV === 'production' 
-  ? process.env.REACT_APP_API_URL || 'https://nobunkzone-server-5.onrender.com/api'
+  ? (process.env.REACT_APP_API_URL || 'https://nobunkzone-server-5.onrender.com/api')
   : 'http://localhost:5000/api';
 
-console.log('API Base URL:', API_BASE_URL); // Debug log
+console.log('Environment:', process.env.NODE_ENV);
+console.log('API Base URL:', API_BASE_URL);
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('token');

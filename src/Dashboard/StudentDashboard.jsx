@@ -151,11 +151,11 @@ function StudentOverview(){
           ]);
           console.log('Attendance data:', attendanceData);
           console.log('Leaves data:', leavesData);
-          setAttendance(Array.isArray(attendanceData) ? attendanceData : []);
+          setAttendance(attendanceData || { attendance: [], statistics: {} });
           setLeaves(Array.isArray(leavesData) ? leavesData : []);
         } catch (dataError) {
           console.error('Error fetching attendance/leaves:', dataError.message);
-          setAttendance([]);
+          setAttendance({ attendance: [], statistics: {} });
           setLeaves([]);
         }
       } catch (error) {
@@ -170,13 +170,31 @@ function StudentOverview(){
   if (loading) return <div className="student-panel">Loading...</div>;
   
   console.log('Current user:', currentUser);
-  console.log('Attendance array:', attendance);
+  console.log('Attendance object:', attendance);
   console.log('Leaves array:', leaves);
   
-  const myRecords = attendance.attendance || [];
-  const presentDays = myRecords.filter(r=> r.status === 'present').length;
-  const totalDays = myRecords.length;
-  const attendancePercentage = totalDays > 0 ? ((presentDays/totalDays)*100).toFixed(1) : 0;
+  // Handle both old and new attendance data formats
+  let myRecords = [];
+  let presentDays = 0;
+  let totalDays = 0;
+  let attendancePercentage = 0;
+  
+  if (attendance && attendance.attendance && Array.isArray(attendance.attendance)) {
+    // New structured format from backend
+    myRecords = attendance.attendance;
+    presentDays = myRecords.filter(r => r.status === 'present').length;
+    totalDays = myRecords.length;
+    attendancePercentage = attendance.statistics?.attendancePercentage || (totalDays > 0 ? ((presentDays/totalDays)*100).toFixed(1) : 0);
+  } else if (Array.isArray(attendance)) {
+    // Old array format
+    const allRecords = attendance.flatMap(a => a.records?.filter(r => r.studentId === currentUser?.id) || []);
+    myRecords = allRecords;
+    presentDays = allRecords.filter(r => r.status === 'present').length;
+    totalDays = allRecords.length;
+    attendancePercentage = totalDays > 0 ? ((presentDays/totalDays)*100).toFixed(1) : 0;
+  }
+  
+  console.log('Processed attendance:', { myRecords, presentDays, totalDays, attendancePercentage });
   
   const myLeaves = leaves.filter(l=> l.studentId === currentUser.id);
   const pendingLeaves = myLeaves.filter(l=> l.status === 'pending').length;
@@ -190,7 +208,7 @@ function StudentOverview(){
       ]);
       console.log('Refreshed - Attendance data:', attendanceData);
       console.log('Refreshed - Leaves data:', leavesData);
-      setAttendance(Array.isArray(attendanceData) ? attendanceData : []);
+      setAttendance(attendanceData || { attendance: [], statistics: {} });
       setLeaves(Array.isArray(leavesData) ? leavesData : []);
     } catch (error) {
       console.error('Error refreshing data:', error.message);

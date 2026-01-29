@@ -16,7 +16,8 @@ const Register = () => {
     console.log('Submitting registration:', { name: formData.name, email: formData.email });
     
     try {
-      const response = await fetch('https://nobunkzone-server-5.onrender.com/api/auth/register', {
+      const API_URL = process.env.REACT_APP_API_URL || (process.env.NODE_ENV === 'production' ? 'https://nobunkzone-server-5.onrender.com' : 'http://localhost:5000');
+      const response = await fetch(`${API_URL}/api/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

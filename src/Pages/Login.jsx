@@ -10,7 +10,8 @@ const Login = () => {
     e.preventDefault();
     
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://nobunkzone-server-5.onrender.com'}/api/auth/login`, {
+      const API_URL = process.env.REACT_APP_API_URL || (process.env.NODE_ENV === 'production' ? 'https://nobunkzone-server-5.onrender.com' : 'http://localhost:5000');
+      const response = await fetch(`${API_URL}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -29,7 +30,7 @@ const Login = () => {
         if (result.role === 'student') {
           // Fetch latest attendance on login
           try {
-            const attendanceResponse = await fetch(`${process.env.REACT_APP_API_URL || 'https://nobunkzone-server-5.onrender.com'}/api/student/attendance`, {
+            const attendanceResponse = await fetch(`${API_URL}/api/student/attendance`, {
               headers: { 
                 'Authorization': `Bearer ${result.token}`,
                 'Content-Type': 'application/json'
@@ -47,7 +48,7 @@ const Login = () => {
         }
         
         // Role-based redirection
-        if (result.role === 'admin') {
+        if (result.role === 'admin' || result.role === 'teacher') {
           navigate('/TeacherDashboard');
         } else {
           navigate('/StudentDashboard');

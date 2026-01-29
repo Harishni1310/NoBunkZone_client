@@ -173,8 +173,7 @@ function StudentOverview(){
   console.log('Attendance array:', attendance);
   console.log('Leaves array:', leaves);
   
-  // Calculate student's attendance percentage
-  const myRecords = attendance.flatMap(a=> a.records?.filter(r=> r.studentId === currentUser.id) || []);
+  const myRecords = attendance.attendance || [];
   const presentDays = myRecords.filter(r=> r.status === 'present').length;
   const totalDays = myRecords.length;
   const attendancePercentage = totalDays > 0 ? ((presentDays/totalDays)*100).toFixed(1) : 0;
@@ -282,8 +281,8 @@ function MyAttendance(){
   
   if (loading) return <div className="student-panel">Loading attendance...</div>;
   
-  const records = attendance.flatMap(a=> a.records?.map(r=> ({date:a.date, ...r})) || []);
-  const myRecords = records.filter(r=> r.studentId === currentUser?.id);
+  const records = attendance.attendance || [];
+  const myRecords = records;
   
   return (
     <div className="student-panel">

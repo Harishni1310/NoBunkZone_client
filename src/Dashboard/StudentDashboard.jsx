@@ -551,9 +551,19 @@ function StudentProfile({setActiveTab}) {
         }
         
         const [attendanceData, leavesData] = await Promise.all([
-          studentAPI.getAttendance(),
-          studentAPI.getLeaves()
+          studentAPI.getAttendance().catch(err => {
+            console.error('Attendance fetch error:', err);
+            return [];
+          }),
+          studentAPI.getLeaves().catch(err => {
+            console.error('Leaves fetch error:', err);
+            return [];
+          })
         ]);
+        
+        console.log('Fetched attendance data:', attendanceData);
+        console.log('Fetched leaves data:', leavesData);
+        
         setAttendance(attendanceData);
         setLeaves(leavesData);
       } catch (error) {
@@ -580,10 +590,29 @@ function StudentProfile({setActiveTab}) {
   }
   
   // Calculate statistics
-  const myRecords = attendance.flatMap(a=> a.records?.filter(r=> r.studentId === currentUser.id) || []);
-  const presentDays = myRecords.filter(r=> r.status === 'present').length;
-  const totalDays = myRecords.length;
-  const attendancePercentage = totalDays > 0 ? ((presentDays/totalDays)*100).toFixed(1) : 0;
+  console.log('Attendance data:', attendance);
+  console.log('Current user ID:', currentUser.id);
+  
+  let presentDays = 0;
+  let totalDays = 0;
+  let attendancePercentage = 0;
+  
+  // Handle new structured attendance response
+  if (attendance && attendance.attendance) {
+    // New format from updated backend
+    const records = attendance.attendance;
+    totalDays = records.length;
+    presentDays = records.filter(r => r.status === 'present').length;
+    attendancePercentage = attendance.statistics?.attendancePercentage || 0;
+  } else if (Array.isArray(attendance)) {
+    // Old format - array of attendance documents
+    const myRecords = attendance.flatMap(a => a.records?.filter(r => r.studentId === currentUser.id) || []);
+    presentDays = myRecords.filter(r => r.status === 'present').length;
+    totalDays = myRecords.length;
+    attendancePercentage = totalDays > 0 ? ((presentDays/totalDays)*100).toFixed(1) : 0;
+  }
+  
+  console.log('Calculated stats:', { presentDays, totalDays, attendancePercentage });
   
   const myLeaves = leaves.filter(l=> l.studentId === currentUser.id);
   const approvedLeaves = myLeaves.filter(l=> l.status === 'approved').length;
